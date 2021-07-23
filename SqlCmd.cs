@@ -21,7 +21,7 @@ namespace cs_display_tsql_go_bugs
            Copyright (c) 2015 Microsoft. All rights reserved.
            ...
 
-         Analyze the first two lines to see if it's installed, and - if it is - get the version numer. */
+         Analyze the first two lines to see if it's installed, and - if it is - get the version number. */
 
       var lines = Regex.Split(RunSqlcmd("-?").Results, @"\r?\n");
       var isInstalled = lines[0].Contains("SQL Server Command Line Tool", StringComparison.CurrentCultureIgnoreCase);
