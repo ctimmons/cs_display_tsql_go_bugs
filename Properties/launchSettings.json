@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "cs_display_tsql_go_bugs": {
+      "commandName": "Project",
+      "commandLineArgs": "/verbose"
+    }
+  }
+}

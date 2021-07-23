@@ -1,0 +1,195 @@
+﻿sqlcmd found on path.  Version '13.0.1601.5'.
+--------------------------------------------------
+==================
+=  Test Case 01  =
+==================
+print 'Simple GO';
+go
+print '';
+
+SMO: Pass
+ScriptDom: Pass
+SqlCmd: Pass
+--------------------------------------------------
+==================
+=  Test Case 02  =
+==================
+
+print 'GO followed by trailing single-line comment';
+go -- single-line comment
+print '';
+
+SMO: Pass
+ScriptDom: Pass
+SqlCmd: Pass
+--------------------------------------------------
+==================
+=  Test Case 03  =
+==================
+
+print 'GO followed by trailing block comment';
+go /* trailing block comment */
+print '';
+
+SMO: FAIL!
+Incorrect syntax was encountered while parsing '/*'.
+
+ScriptDom: Pass
+SqlCmd: FAIL!
+Sqlcmd: Error: Syntax error at line 3 near command 'go' in file 'Test Cases\Test Case 03.sql'.
+
+--------------------------------------------------
+==================
+=  Test Case 04  =
+==================
+
+print 'GO with preceding block comment on same line';
+/* preceding block comment on same line */ go
+print '';
+
+SMO: FAIL!
+An exception occurred while executing a Transact-SQL statement or batch.
+Incorrect syntax near 'go'.
+  HelpLink.ProdName: Microsoft SQL Server
+  HelpLink.ProdVer: 13.00.5081
+  HelpLink.EvtSrc: MSSQLServer
+  HelpLink.EvtID: 102
+  HelpLink.BaseHelpUrl: http://go.microsoft.com/fwlink
+  HelpLink.LinkId: 20476
+
+ScriptDom: Pass
+SqlCmd: Pass
+--------------------------------------------------
+==================
+=  Test Case 05  =
+==================
+
+print 'GO with preceding block comment spanning two lines';
+/* preceding block comment
+   on spanning two lines */ go
+print '';
+
+SMO: FAIL!
+An exception occurred while executing a Transact-SQL statement or batch.
+Incorrect syntax near 'go'.
+  HelpLink.ProdName: Microsoft SQL Server
+  HelpLink.ProdVer: 13.00.5081
+  HelpLink.EvtSrc: MSSQLServer
+  HelpLink.EvtID: 102
+  HelpLink.BaseHelpUrl: http://go.microsoft.com/fwlink
+  HelpLink.LinkId: 20476
+
+ScriptDom: Pass
+SqlCmd: Pass
+--------------------------------------------------
+==================
+=  Test Case 06  =
+==================
+
+print 'GO with preceding block comment spanning two lines, with additional block comment separated by a space';
+/* preceding block comment
+   on spanning two lines */ /* note the space between these two block comments */ go
+print '';
+
+SMO: FAIL!
+An exception occurred while executing a Transact-SQL statement or batch.
+Incorrect syntax near 'go'.
+  HelpLink.ProdName: Microsoft SQL Server
+  HelpLink.ProdVer: 13.00.5081
+  HelpLink.EvtSrc: MSSQLServer
+  HelpLink.EvtID: 102
+  HelpLink.BaseHelpUrl: http://go.microsoft.com/fwlink
+  HelpLink.LinkId: 20476
+
+ScriptDom: Pass
+SqlCmd: FAIL!
+Msg 102, Level 15, State 1, Server OPUS, Line 4
+Incorrect syntax near 'go'.
+
+--------------------------------------------------
+==================
+=  Test Case 07  =
+==================
+
+print 'GO with preceding block comment spanning two lines, with additional block comment NOT separated by a space';
+/* preceding block comment
+   on spanning two lines *//* note the lack of space between these two block comments */ go
+print '';
+
+SMO: FAIL!
+An exception occurred while executing a Transact-SQL statement or batch.
+Incorrect syntax near 'go'.
+  HelpLink.ProdName: Microsoft SQL Server
+  HelpLink.ProdVer: 13.00.5081
+  HelpLink.EvtSrc: MSSQLServer
+  HelpLink.EvtID: 102
+  HelpLink.BaseHelpUrl: http://go.microsoft.com/fwlink
+  HelpLink.LinkId: 20476
+
+ScriptDom: Pass
+SqlCmd: Pass
+--------------------------------------------------
+==================
+=  Test Case 08  =
+==================
+
+print 'GO with block comment on previous line';
+/* preceding block comment on line before go */
+go
+print '';
+
+SMO: Pass
+ScriptDom: Pass
+SqlCmd: Pass
+--------------------------------------------------
+==================
+=  Test Case 09  =
+==================
+
+print 'Block comment with nested empty block comment, that contains a GO statement';
+/* block comment with nested empty block comment (this is legal T-SQL), that contains a go statement
+/**/
+go
+*/
+print '';
+
+SMO: Pass
+ScriptDom: Pass
+SqlCmd: FAIL!
+Msg 113, Level 15, State 1, Server OPUS, Line 5
+Missing end comment mark '*/'.
+Msg 102, Level 15, State 1, Server OPUS, Line 1
+Incorrect syntax near '*'.
+
+--------------------------------------------------
+==================
+=  Test Case 10  =
+==================
+
+print 'GO without a count';
+go -- go without count
+print '';
+
+SMO: Pass
+ScriptDom: Pass
+SqlCmd: Pass
+--------------------------------------------------
+==================
+=  Test Case 11  =
+==================
+
+print 'GO with a count';
+go 3 -- go with count
+print '';
+
+SMO: Pass
+ScriptDom: FAIL!
+TSql80Parser: 46010: Incorrect syntax near 3.
+TSql90Parser: 46010: Incorrect syntax near 3.
+TSql100Parser: 46010: Incorrect syntax near 3.
+TSql110Parser: 46010: Incorrect syntax near 3.
+TSql120Parser: 46010: Incorrect syntax near 3.
+TSql130Parser: 46010: Incorrect syntax near 3.
+TSql140Parser: 46010: Incorrect syntax near 3.
+TSql150Parser: 46010: Incorrect syntax near 3.
+SqlCmd: Pass
