@@ -15,21 +15,21 @@ namespace cs_display_tsql_go_bugs
 {
   public class ScriptDom
   {
+    /* ScriptDom provides several T-SQL parsers.
+       Get instances of each one to run the test cases thru. */
+    private static readonly IEnumerable<TSqlParser> _allTSqlParsers =
+      Assembly
+      .Load(System.Reflection.AssemblyName.GetAssemblyName("Microsoft.SqlServer.TransactSql.ScriptDom.dll").FullName)
+      .ExportedTypes
+      .Where(type => type.IsSubclassOf(typeof(TSqlParser)))
+      .Select(type => (TSqlParser) Activator.CreateInstance(type, new Object[] { false }));
+
     public static String Run(String testCase) =>
-      GetTSqlParsers("Microsoft.SqlServer.TransactSql.ScriptDom.dll")
+      _allTSqlParsers
       .Select(parser => Parse(parser, testCase))
       .Where(s => !String.IsNullOrWhiteSpace(s))
       .OrderByNatural(s => s)
       .Join("\n");
-
-    /* ScriptDom provides several T-SQL parsers.
-       Get instances of each one to run the test cases thru. */
-    private static IEnumerable<TSqlParser> GetTSqlParsers(String assemblyName) =>
-      Assembly
-      .Load(System.Reflection.AssemblyName.GetAssemblyName(assemblyName).FullName)
-      .ExportedTypes
-      .Where(t => t.IsSubclassOf(typeof(TSqlParser)))
-      .Select(t => (TSqlParser) Activator.CreateInstance(t, new Object[] { false }));
 
     private static String Parse(TSqlParser parser, String testCase)
     {
