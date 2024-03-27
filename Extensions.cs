@@ -29,7 +29,7 @@ namespace cs_display_tsql_go_bugs
 
        Licensed under CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)
        See https://stackoverflow.com/help/licensing for more info. */
-    public static IEnumerable<T> OrderByNatural<T>(this IEnumerable<T> items, Func<T, String> selector, StringComparer stringComparer = null)
+    public static IEnumerable<T> OrderByNatural<T>(this IEnumerable<T> items, Func<T, String> selector, StringComparer stringComparer = null!)
     {
       var maxDigits =
         items

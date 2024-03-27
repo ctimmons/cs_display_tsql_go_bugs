@@ -26,12 +26,12 @@ namespace cs_display_tsql_go_bugs
       var lines = Regex.Split(RunSqlcmd("-?").Results, @"\r?\n");
       var isInstalled = lines[0].Contains("SQL Server Command Line Tool", StringComparison.CurrentCultureIgnoreCase);
       if (!isInstalled)
-        return (false, null);
+        return (false, null!);
 
       Regex versionNumberRegex = new(@"(?<version_number>\d+\.\d+\.\d+\.\d+)");
       var match = versionNumberRegex.Match(lines[1]);
 
-      return (true, match.Success ? match.Groups["version_number"].Value : null);
+      return (true, match.Success ? match.Groups["version_number"].Value : null!);
     }
 
     private static (Boolean HasErrors, String Results) RunSqlcmd(String arguments)
@@ -107,7 +107,7 @@ namespace cs_display_tsql_go_bugs
           UseShellExecute = false
         };
 
-      using (var process = Process.Start(psi))
+      using (var process = Process.Start(psi)!)
       {
         process.EnableRaisingEvents = true;
         process.ErrorDataReceived += stderr_DataReceived;

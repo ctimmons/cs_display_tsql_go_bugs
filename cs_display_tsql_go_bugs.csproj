@@ -16,10 +16,6 @@
     <PackageReference Include="Microsoft.SqlServer.SqlManagementObjects" Version="171.30.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Test Cases\" />
-  </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(ProjectDir)Test Cases\*.*&quot; &quot;$(TargetDir)Test Cases&quot; /Y /I /E" />
   </Target>

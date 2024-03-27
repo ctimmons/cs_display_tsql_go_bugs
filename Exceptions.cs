@@ -25,7 +25,7 @@ namespace cs_display_tsql_go_bugs
         foreach (DictionaryEntry de in currentException.Data)
           result.AppendLine($"  {de.Key}: {de.Value}");
 
-        rec(currentException.InnerException);
+        rec(currentException.InnerException!);
       }
 
       rec(ex);

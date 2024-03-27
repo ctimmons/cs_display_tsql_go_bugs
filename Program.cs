@@ -14,7 +14,7 @@ namespace cs_display_tsql_go_bugs
   {
     public static void Main(String[] args)
     {
-      const String connectionString = "Server=(local);Database=master;Trusted_Connection=True;";
+      const String connectionString = "Server=(local);Database=master;Trusted_Connection=True;TrustServerCertificate=True";
 
       var shouldShowVerboseOutput = args.Any(arg => arg.Equals("/verbose", StringComparison.CurrentCultureIgnoreCase));
       var (isSqlCmdAvailable, version) = SqlCmd.GetSqlCmdInfo();
