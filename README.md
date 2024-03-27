@@ -24,7 +24,7 @@
 
 1. Building
 
-   This is a .Net 5.0 app.  It has two NuGet dependencies:
+   This is a .Net 8.0 app.  It has two NuGet dependencies:
 
    - `Microsoft.SqlServer.DacFx` (containing the `TSqlParser` class)
    - `Microsoft.SqlServer.SqlManagementObject` (aka `SMO`)
